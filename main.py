@@ -1,4 +1,3 @@
-import asyncio
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse, RedirectResponse
 import os
@@ -7,15 +6,29 @@ import shutil
 from fastapi.templating import Jinja2Templates
 import uuid
 from fastapi.staticfiles import StaticFiles
-
+from fastapi.middleware.cors import CORSMiddleware
 
 # c'est ce server aui se charge de la file d'attente et de l'envoi des video au server ia
 # on a besoin de celery rabbitmq
 
 
+
+# add db https://www.youtube.com/watch?v=__XNtJ3pDh0&t=14055s
+# we have a database on oracl cloud =>  HEDT2N0D1FEUGLTCAlways
+
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 app.mount("/received_videos", StaticFiles(directory="received_videos"), name="received_videos")
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 def send_file(image, video, callback_url, key):
     files = {
@@ -78,3 +91,10 @@ async def show_gallery(request: Request):
 @app.get("/", response_class=HTMLResponse)
 async def main(request: Request):
     return templates.TemplateResponse("send.html", {"request": request})
+
+
+
+
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app)

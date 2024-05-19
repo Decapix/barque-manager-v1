@@ -1,0 +1,6 @@
+version: '3'
+services:
+  api:
+    image: barque-manager:v1.1
+    ports:
+      - 8000:80
