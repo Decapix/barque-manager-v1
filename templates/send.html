@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Upload Files to AI Server</title>
+    </head>
+    <body>
+        <h1>File Upload to AI Server</h1>
+        <a href="/gallery">gallery</a>
+<br/>
+<a href="/">nouvelle video</a>
+<br/><br/>
+        <form action="/send/" method="post" enctype="multipart/form-data">
+            <label for="image">Select Image:</label>
+            <input type="file" id="image" name="image" accept="image/*"><br><br>
+            <label for="video">Select Video:</label>
+            <input type="file" id="video" name="video" accept="video/*"><br><br>
+            <input type="submit" value="Send Files">
+        </form>
+    </body>
+</html>

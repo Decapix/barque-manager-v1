@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Processed Files</title>
+</head>
+<body>
+    <h1>Processed Files</h1>
+
+    <a href="/gallery">gallery</a>
+    <br/>
+    <a href="/">nouvelle video</a>
+    <br/><br/>
+    {% for video in videos %}
+    <div>
+        <p>{{ video }}</p>
+        <video controls src="{{ url_for('received_videos', path=video) }}"></video>
+        <br>
+        <!-- Bouton pour télécharger la vidéo -->
+        <a href="{{ url_for('received_videos', path=video) }}" download="{{ video }}">
+            <button>Download Video</button>
+        </a>
+        <!-- Bouton pour supprimer la vidéo -->
+        <button onclick="location.href='/delete/{{ video }}'">Delete</button>
+    </div>
+    {% endfor %}
+</body>
+</html>
