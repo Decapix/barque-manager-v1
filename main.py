@@ -37,7 +37,7 @@ def send_file(image, video, callback_url, key):
     }
     data = {"callback_url": callback_url, "key": key}
     with httpx.Client() as client:
-        response = client.post("https://nscompetentkowalevskvbubdixu-barque-des-rapteux-server-ia.functions.fnc.fr-par.scw.cloud/upload/", files=files, data=data)
+        response = client.post("http://127.0.0.1:8010/upload/", files=files, data=data) # ia instance / 127.0.0.1:8010 in local
     return response.status_code
 
 
@@ -45,7 +45,7 @@ def send_file(image, video, callback_url, key):
 async def send_to_processing(image: UploadFile = File(...), video: UploadFile = File(...)):
     image_data = await image.read()
     video_data = await video.read()
-    callback_url = "https://la-barque-des-rapteux.ovh/callback/"
+    callback_url = "http://127.0.0.1:8020/callback/"     # manager instance / 127.0.0.1:8020 in local
     key = "labarquedesrapteux-jsuisdansmaparanioa"
     send_file(image_data, video_data, callback_url, key)
     return RedirectResponse(url="/receive/", status_code=303)
